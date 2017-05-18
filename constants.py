@@ -24,11 +24,9 @@
 ##############################################################################
 import os
 
-# Language codes.
-ENG = "en"
-FR = "fr"
-DE = "de"
 
+# Languages we show in the GUI to work with Moses.
+languages = ["en", "es", "fr", "it", "ru", "cz", "ar", "pt", "de"]
 
 def adapt_path_for_cygwin(is_windows, directory):
     """@brief     Adapts a linux path to a windows one."""
@@ -63,8 +61,7 @@ def is_valid_file(filepath):
     is_valid = is_valid and os.path.exists(filepath)
     return is_valid
 
-# Languages we show in the GUI to work with Moses.
-languages = [ENG, FR, DE]
+
 
 # Config file where info from Moses is saved.
 moses_dir_fn = "moses.config"
@@ -85,7 +82,7 @@ truecaser = adapt_path_for_cygwin(is_win, "%s/scripts/recaser/truecase.perl ")
 
 cleaner = adapt_path_for_cygwin(is_win, "%s/scripts/training/clean-corpus-n.perl ")
 
-lm_train = adapt_path_for_cygwin(is_win, "%s/bin/lmplz ") + "-o 3 "  # TODO: Should be chosen by the user.
+lm_train = adapt_path_for_cygwin(is_win, "%s/bin/lmplz ") + "--discount_fallback -o 3 "  # TODO: Should be chosen by the user.
 
 blm_train = adapt_path_for_cygwin(is_win, "%s/bin/build_binary ")
 

@@ -3,8 +3,7 @@
 
 ##############################################################################
 #
-# PyKeylogger: TTT for Linux and Windows
-# Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
+## Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
 #                    Miguel Lemos <miguelemosreverte@gmail.com>
 #
 # This program is free software; you can redistribute it and/or
@@ -53,7 +52,6 @@ install_and_import("itertools")
 
 from commands import *
 from files_processing import *
-from evaluation import *
 from constants import moses_dir_fn
 
 
@@ -113,6 +111,7 @@ class MyWindow():
         # Init
         self.source_lang = None
         self.target_lang = None
+        self.output_text= None
         self.cwd = os.getcwd()
 
     def is_moses_dir_valid(self, directory):
@@ -242,7 +241,7 @@ class MyWindow():
             # Start threads
             all_ok = True
             for cmd in cmds:
-                print cmd
+                #print cmd
                 return_text += cmd + "\n"
                 # all_ok = all_ok and (os.system(cmd) == 0)
                 proc = subprocess.Popen([cmd], stdout=subprocess.PIPE, shell=True)
@@ -252,20 +251,25 @@ class MyWindow():
             if all_ok:
                 self.is_corpus_preparation_ready = True
         else:
-            print "TODO: Pop up error message!!"
+            #print "TODO: Pop up error message!!"
         return return_text
 
     def _train(self):
         # print "==============================>", self.is_corpus_preparation_ready
-        print self.output_text
-        output_directory = adapt_path_for_cygwin(self.is_windows, self.output_text)
+
+        if self.output_text is not None: 
+            #print self.output_text
+            output_directory = adapt_path_for_cygwin(self.is_windows, self.output_text)
+        else:            
+            return "ERR"
+
         return_text = ""
         if output_directory is not None and self.is_corpus_preparation_ready:
             cmds = []
             output = "Log:\n\n"
             # Train the language model.
             self.lm_arpa = generate_lm_fn(output_directory)
-            print "out:", self.lm_arpa, "\n"
+            #print "out:", self.lm_arpa, "\n"
             cmds.append(get_lmtrain_command(self.moses_dir,
                                              self.target_lang,
                                             self.lm_true,
@@ -273,7 +277,7 @@ class MyWindow():
 
             # Binarize arpa
             self.blm = generate_blm_fn(output_directory)
-            print "binarized out:", self.blm, "\n"
+            #print "binarized out:", self.blm, "\n"
             cmds.append(get_blmtrain_command(self.moses_dir,
                                              self.target_lang,
                                              self.lm_arpa,
@@ -298,7 +302,7 @@ class MyWindow():
 
             for cmd in cmds:
                 # use Popen for non-blocking
-                print cmd
+                #print cmd
                 output += cmd
                 return_text += cmd + "\n"
                 proc = subprocess.Popen([cmd],
@@ -326,20 +330,26 @@ class MyWindow():
             return output
         return return_text
 
-    def _machine_translation(self, mt_in):
+    def _machine_translation(self, mt_in, chooseModel):
         mt_in = str(mt_in)
         base=os.path.basename(mt_in)
-        mt_out = os.path.dirname(mt_in) +  os.path.splitext(base)[0] + "_translated" + os.path.splitext(base)[1]
+        #mt_out = os.path.dirname(mt_in) +  os.path.splitext(base)[0] + "_translated" + os.path.splitext(base)[1]
+        mt_out = mt_in +  ".translated"
         in_file = adapt_path_for_cygwin(self.is_windows, mt_in)
         out_file = adapt_path_for_cygwin(self.is_windows,mt_out)
-        output = "Running decoder....\n\n"
+        #print "OUTDIR:::"+adapt_path_for_cygwin(self.is_windows, self.output_text) + "/train/model/moses.ini"
+        if chooseModel:
+            output_text = chooseModel
+        else:
+            output_text = adapt_path_for_cygwin(self.is_windows, self.output_text)
+        
         # Run the decoder.
         cmd = get_test_command(self.moses_dir,
-                                   adapt_path_for_cygwin(self.is_windows, self.output_text) + "/train/model/moses.ini",
+                                   adapt_path_for_cygwin(self.is_windows, output_text) + "/train/model/moses.ini",
                                    in_file,
-                                   out_file)
+                                   out_file) #---> explota si se elije choose model
         # use Popen for non-blocking
-        print cmd
+        #print "CMD MT:::::::"+cmd
         proc = subprocess.Popen([cmd],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE,
@@ -358,7 +368,4 @@ class MyWindow():
         f.close()
         return output
 
-    def _evaluate(self, checkbox_indexes, evaluation_source, evaluation_reference):
-        evaluation_source = str(evaluation_source)
-        evaluation_reference= str(evaluation_reference)
-        return evaluate(checkbox_indexes, evaluation_source, evaluation_reference)
+    

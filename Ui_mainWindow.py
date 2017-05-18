@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def choose_language(self, tab, source_or_target, language):
-        print language
+       # print language
         if tab == "preprocessing":
             if source_or_target == "source":
                 self.preprocessing_source_language = language
@@ -199,46 +199,46 @@ class Ui_MainWindow(object):
         gridLayout.setObjectName(_fromUtf8("gridLayout"))
 
         #label_source_evaluation_tab
-        self.label_source_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
-        self.label_source_evaluation_tab.setObjectName(_fromUtf8("label_source_evaluation_tab"))
-        gridLayout.addWidget(self.label_source_evaluation_tab, 1, 1, 1, 1)
+        self.label_hyp_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
+        self.label_hyp_evaluation_tab.setObjectName(_fromUtf8("label_hyp_evaluation_tab"))
+        gridLayout.addWidget(self.label_hyp_evaluation_tab, 1, 1, 1, 1)
         #btn_source_evaluation_tab
-        self.btn_source_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
-        self.btn_source_evaluation_tab.setObjectName(_fromUtf8("btn_source_evaluation_tab"))
-        gridLayout.addWidget(self.btn_source_evaluation_tab, 1, 3, 1, 1)
+        self.btn_hyp_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
+        self.btn_hyp_evaluation_tab.setObjectName(_fromUtf8("btn_hyp_evaluation_tab"))
+        gridLayout.addWidget(self.btn_hyp_evaluation_tab, 1, 3, 1, 1)
         #edit_source_evaluation_tab
-        self.edit_source_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
-        self.edit_source_evaluation_tab.setReadOnly(True)
-        self.edit_source_evaluation_tab.setObjectName(_fromUtf8("edit_source_evaluation_tab"))
-        gridLayout.addWidget(self.edit_source_evaluation_tab, 1, 2, 1, 1)
+        self.edit_hyp_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
+        self.edit_hyp_evaluation_tab.setReadOnly(True)
+        self.edit_hyp_evaluation_tab.setObjectName(_fromUtf8("edit_hyp_evaluation_tab"))
+        gridLayout.addWidget(self.edit_hyp_evaluation_tab, 1, 2, 1, 1)
 
         #label_target_evaluation_tab
-        self.label_target_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
-        self.label_target_evaluation_tab.setObjectName(_fromUtf8("label_target_evaluation_tab"))
-        gridLayout.addWidget(self.label_target_evaluation_tab, 2, 1, 1, 1)
+        self.label_ref_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
+        self.label_ref_evaluation_tab.setObjectName(_fromUtf8("label_ref_evaluation_tab"))
+        gridLayout.addWidget(self.label_ref_evaluation_tab, 2, 1, 1, 1)
         #btn_target_evaluation_tab
-        self.btn_target_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
-        self.btn_target_evaluation_tab.setObjectName(_fromUtf8("btn_target_evaluation_tab"))
-        gridLayout.addWidget(self.btn_target_evaluation_tab, 2, 3, 1, 1)
+        self.btn_ref_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
+        self.btn_ref_evaluation_tab.setObjectName(_fromUtf8("btn_ref_evaluation_tab"))
+        gridLayout.addWidget(self.btn_ref_evaluation_tab, 2, 3, 1, 1)
         #edit_target_evaluation_tab
-        self.edit_target_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
-        self.edit_target_evaluation_tab.setReadOnly(True)
-        self.edit_target_evaluation_tab.setObjectName(_fromUtf8("edit_target_evaluation_tab"))
-        gridLayout.addWidget(self.edit_target_evaluation_tab, 2, 2, 1, 1)
+        self.edit_ref_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
+        self.edit_ref_evaluation_tab.setReadOnly(False)
+        self.edit_ref_evaluation_tab.setObjectName(_fromUtf8("edit_ref_evaluation_tab"))
+        gridLayout.addWidget(self.edit_ref_evaluation_tab, 2, 2, 1, 1)
 
         #label_output_dir_evaluation_tab
-        self.label_output_dir_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
-        self.label_output_dir_evaluation_tab.setObjectName(_fromUtf8("label_output_dir_evaluation_tab"))
-        gridLayout.addWidget(self.label_output_dir_evaluation_tab, 3, 1, 1, 1)
+        #self.label_output_dir_evaluation_tab = QtGui.QLabel(groupBox_evaluation)
+        #self.label_output_dir_evaluation_tab.setObjectName(_fromUtf8("label_output_dir_evaluation_tab"))
+        #gridLayout.addWidget(self.label_output_dir_evaluation_tab, 3, 1, 1, 1)
         #btn_output_dir_evaluation_tab
-        self.btn_output_dir_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
-        self.btn_output_dir_evaluation_tab.setObjectName(_fromUtf8("btn_output_dir_evaluation_tab"))
-        gridLayout.addWidget(self.btn_output_dir_evaluation_tab, 3, 3, 1, 1)
+        #self.btn_output_dir_evaluation_tab = QtGui.QPushButton(groupBox_evaluation)
+        #self.btn_output_dir_evaluation_tab.setObjectName(_fromUtf8("btn_output_dir_evaluation_tab"))
+        #gridLayout.addWidget(self.btn_output_dir_evaluation_tab, 3, 3, 1, 1)
         #edit_output_evaluation_tab
-        self.edit_output_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
-        self.edit_output_evaluation_tab.setReadOnly(True)
-        self.edit_output_evaluation_tab.setObjectName(_fromUtf8("edit_output_evaluation_tab"))
-        gridLayout.addWidget(self.edit_output_evaluation_tab, 3, 2, 1, 1)
+        #self.edit_output_evaluation_tab = QtGui.QLineEdit(groupBox_evaluation)
+        #self.edit_output_evaluation_tab.setReadOnly(True)
+        #self.edit_output_evaluation_tab.setObjectName(_fromUtf8("edit_output_evaluation_tab"))
+        #gridLayout.addWidget(self.edit_output_evaluation_tab, 3, 2, 1, 1)
 
         verticalLayout_2.addWidget(groupBox_evaluation)
         splitter = QtGui.QSplitter(self.tab_evaluation)
@@ -279,14 +279,6 @@ class Ui_MainWindow(object):
         gridLayout.addWidget(self.btn_check_HTER, 1, 7, 1, 1)
 
 
-        self.btn_check_GTM = QtGui.QCheckBox(groupBox_evaluation)
-        self.btn_check_GTM.setEnabled(True)
-        self.btn_check_GTM.setText("GTM")
-        self.btn_check_GTM.setMinimumSize(QtCore.QSize(5, 5))
-        self.btn_check_GTM.setObjectName(_fromUtf8("btn_check_GTM"))
-        gridLayout.addWidget(self.btn_check_GTM, 1, 8, 1, 1)
-
-
         self.btn_check_BLEU = QtGui.QCheckBox(groupBox_evaluation)
         self.btn_check_BLEU.setEnabled(True)
         self.btn_check_BLEU.setText("BLEU")
@@ -294,38 +286,15 @@ class Ui_MainWindow(object):
         self.btn_check_BLEU.setObjectName(_fromUtf8("btn_check_BLEU"))
         gridLayout.addWidget(self.btn_check_BLEU, 2, 5, 1, 1)
 
-        self.btn_check_BLEU2GRAM = QtGui.QCheckBox(groupBox_evaluation)
-        self.btn_check_BLEU2GRAM.setEnabled(True)
-        self.btn_check_BLEU2GRAM.setText("BLEU2")
-        self.btn_check_BLEU2GRAM.setMinimumSize(QtCore.QSize(5, 5))
-        self.btn_check_BLEU2GRAM.setObjectName(_fromUtf8("btn_check_BLEU2GRAM"))
-        gridLayout.addWidget(self.btn_check_BLEU2GRAM, 2, 6, 1, 1)
-
-
-        self.btn_check_BLEU3GRAM = QtGui.QCheckBox(groupBox_evaluation)
-        self.btn_check_BLEU3GRAM.setEnabled(True)
-        self.btn_check_BLEU3GRAM.setText("BLEU3")
-        self.btn_check_BLEU3GRAM.setMinimumSize(QtCore.QSize(5, 5))
-        self.btn_check_BLEU3GRAM.setObjectName(_fromUtf8("btn_check_BLEU3GRAM"))
-        gridLayout.addWidget(self.btn_check_BLEU3GRAM, 2, 7, 1, 1)
-
-
-        self.btn_check_BLEU4GRAM = QtGui.QCheckBox(groupBox_evaluation)
-        self.btn_check_BLEU4GRAM.setEnabled(True)
-        self.btn_check_BLEU4GRAM.setText("BLEU4")
-        self.btn_check_BLEU4GRAM.setMinimumSize(QtCore.QSize(5, 5))
-        self.btn_check_BLEU4GRAM.setObjectName(_fromUtf8("btn_check_BLEU4GRAM"))
-        gridLayout.addWidget(self.btn_check_BLEU4GRAM, 2, 8, 1, 1)
-
-
-        self.label_source_evaluation_tab.setText(_translate("MainWindow", "Source text", None))
-        self.btn_source_evaluation_tab.setText(_translate("Dialog", "...", None))
-        self.label_target_evaluation_tab.setText(_translate("MainWindow", "Target text", None))
-        self.btn_target_evaluation_tab.setText(_translate("Dialog", "...", None))
-        self.label_output_dir_evaluation_tab.setText(_translate("MainWindow", "Output Directory", None))
-        self.btn_output_dir_evaluation_tab.setText(_translate("Dialog", "...", None))
+        self.label_hyp_evaluation_tab.setText(_translate("MainWindow", "MT (Hyp)", None))
+        self.btn_hyp_evaluation_tab.setText(_translate("Dialog", "...", None))
+        self.label_ref_evaluation_tab.setText(_translate("MainWindow", "Reference", None))
+        self.btn_ref_evaluation_tab.setText(_translate("Dialog", "...", None))
+        #self.label_output_dir_evaluation_tab.setText(_translate("MainWindow", "Output Directory", None))
+        #self.btn_output_dir_evaluation_tab.setText(_translate("Dialog", "...", None))
         self.btnEvaluation.setText(_translate("MainWindow", "Start Evaluation", None))
-        groupBox_evaluation.setTitle(_translate("MainWindow", "Evaluation", None))
+        groupBox_evaluation.setTitle(_translate("MainWindow", "Evaluation", None))        
+
 
     def initialize_tab_machine_translation(self):
         self.tab_machine_translation = QtGui.QWidget()

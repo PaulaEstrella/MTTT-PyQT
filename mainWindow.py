@@ -31,6 +31,9 @@ import time
 import threading
 import shutil
 import codecs
+import subprocess
+import os
+import platform
 
 from Ui_mainWindow import Ui_MainWindow
 from util import doAlert
@@ -85,15 +88,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         source = self.edit_source_machine_translation_tab.text()
         if not source:
-            doAlert("Please choose a source text first.")
+            doAlert("Please choose a source text.")
             return
+        self.results_machine_translation.setText("Running decoder, please wait\n\n")  
         text = self.migrated_backend_main._machine_translation(source, self.chooseModel).decode('utf8')
         self.results_machine_translation.setText(text)
 
     @pyqtSignature("")
     def on_btnChooseTM_clicked(self):
-        #self.chooseModel= str(QFileDialog.getExistingDirectory(self, "Select Translation Model"))
-        self.chooseModel.setText(str(self.directoryDialog()))       
+        #self.chooseModel= str(QFileDialog.getExistingDirectory(self, "Select Model"))
+        self.chooseModel=str(self.directoryDialog()) 
+           
 
     @pyqtSignature("")
     def on_btnCreateTM_clicked(self):
@@ -148,8 +153,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modified_table_items_coordinates = []
         self.lastChangedTableItemCoordinates = (-1,-1)
         #CHECK WHICH OF THE FOLLOWING SHOULD BE CLEARED 
-        #TO SHOW DIFFERENCES CORRECTLY AFTER REOADING FILES FOR PE 
-        #AGREGAR LIMPIAR BUSQEUDAS       
+        #TO SHOW DIFFERENCES CORRECTLY AFTER RELOADING FILES FOR PE      
         self.saved_modified_references = []
         self.differences = None
         #self.post_editing_data = {}
@@ -444,40 +448,83 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         Slot documentation goes here.
         """
+        
         text = self.migrated_backend_main._train()
-        self.results_training.setText(text)
+        
+        if text == "ERR":
+            text = "ERROR: missing corpus to train model"
+            doAlert("Please provide corpus to train model")
+            self.tabWidget.setCurrentIndex(0)
+            return
+        else:
+            self.results_training.setText(text)
+        
 
     @pyqtSignature("")
     def on_btnEvaluation_clicked(self):
         """
         Slot documentation goes here.
         """
-        source = self.edit_source_evaluation_tab.text()
-        target = self.edit_target_evaluation_tab.text()
-        output = self.edit_output_evaluation_tab.text()
+        hyp = self.edit_hyp_evaluation_tab.text()
+        ref = self.edit_ref_evaluation_tab.text()
+        output = ""#self.edit_output_evaluation_tab.text()
 
-        if not source:
-            doAlert("Please choose a source text first.")
+        if not hyp:
+            doAlert("Please choose MTed text.")
             return
-        elif not target:
-            doAlert("Please choose a target text first.")
+        elif not ref:
+            doAlert("Please choose reference text.")
             return
-        elif not output:
-            doAlert("Please choose an output directory first.")
-            return
+        #elif not output:
+         ##   doAlert("Please choose an output directory first.")
+         #   return
+       
+        if self.btn_check_WER.isChecked():
+            cmd = "perl "+ os.path.abspath("evaluation_scripts") + "/WER.pl" + " -t " + hyp + " -r " + ref
+            proc = subprocess.Popen([cmd],
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        shell=True)
+                
+            out, err = proc.communicate()
+           
+            output += "WER: %s (Execution errors: %s)\n" % (out, err)
+            #print cmd
 
-        checkbox_indexes =[]#[False] * 8 #checkbox_indexes["WER","PER","HTER", "GTM", "BLEU","BLEU2GRAM","BLEU3GRAM"]
-        checkbox_indexes.append(self.btn_check_WER.isChecked())
-        checkbox_indexes.append(self.btn_check_PER.isChecked())
-        checkbox_indexes.append(self.btn_check_HTER.isChecked())
-        checkbox_indexes.append(self.btn_check_GTM.isChecked())
-        checkbox_indexes.append(self.btn_check_BLEU.isChecked())
-        checkbox_indexes.append(self.btn_check_BLEU2GRAM.isChecked())
-        checkbox_indexes.append(self.btn_check_BLEU3GRAM.isChecked())
-        checkbox_indexes.append(self.btn_check_BLEU4GRAM.isChecked())
+        if self.btn_check_PER.isChecked():
+            cmd = "perl "+ os.path.abspath("evaluation_scripts") + "/PER.pl" + " -t " + hyp + " -r " + ref
+            proc = subprocess.Popen([cmd],
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        shell=True)
+                
+            out, err = proc.communicate()
+            output += "PER: %s (Execution errors: %s)\n" % (out, err)   
+            #print cmd
 
-        text = self.migrated_backend_main._evaluate(checkbox_indexes, source, target)
-        self.results_evaluation.setText(text)
+        if self.btn_check_HTER.isChecked():
+            cmd = "perl "+ os.path.abspath("evaluation_scripts") + "/tercom_v6b.pl" + " -h " + hyp + " -r " + ref + " -o sum_doc "
+            proc = subprocess.Popen([cmd],
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        shell=True)
+            out, err = proc.communicate()
+            output += "HTER: %s (Execution errors: %s)\n" % (out, err)
+            #print cmd
+
+        if self.btn_check_BLEU.isChecked():
+            cmd = "perl "+ os.path.abspath("evaluation_scripts") + "/BLEU.pl " +  ref + " < " + hyp
+            proc = subprocess.Popen([cmd],
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        shell=True)
+            out, err = proc.communicate()
+            output += "BLEU: %s (Execution errors: %s)\n" % (out, err) 
+            #print cmd 
+
+       
+        self.results_evaluation.setText(output)
+
 
     @pyqtSignature("")
     def on_btnPreProccess_clicked(self):
@@ -511,35 +558,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.results_preprocessing.setText(text)
 
     @pyqtSignature("")
-    def on_btn_source_evaluation_tab_clicked(self):
+    def on_btn_hyp_evaluation_tab_clicked(self):
         """
         Slot documentation goes here.
         """
         dialog = QFileDialog(self)
         dialog.setFileMode(QFileDialog.ExistingFile)
-        dialog.setNameFilter("Choose a text source (*.*)")
+        dialog.setNameFilter("Machine translated text (*.*)")
         dialog.setViewMode(QFileDialog.Detail)
         if dialog.exec_():
-            self.edit_source_evaluation_tab.setText(dialog.selectedFiles()[0])
+            self.edit_hyp_evaluation_tab.setText(dialog.selectedFiles()[0])
 
     @pyqtSignature("")
-    def on_btn_target_evaluation_tab_clicked(self):
+    def on_btn_ref_evaluation_tab_clicked(self):
         """
         Slot documentation goes here.
         """
         dialog = QFileDialog(self)
         dialog.setFileMode(QFileDialog.ExistingFile)
-        dialog.setNameFilter("Choose a text target (*.*)")
+        dialog.setNameFilter("Reference file (*.*)")
         dialog.setViewMode(QFileDialog.Detail)
         if dialog.exec_():
-            self.edit_target_evaluation_tab.setText(dialog.selectedFiles()[0])
+            self.edit_ref_evaluation_tab.setText(dialog.selectedFiles()[0])
 
-    @pyqtSignature("")
-    def on_btn_output_dir_evaluation_tab_clicked(self):
+    #@pyqtSignature("")
+   # def on_btn_output_dir_evaluation_tab_clicked(self):
         """
         Slot documentation goes here.
         """
-        self.edit_output_evaluation_tab.setText(str(self.directoryDialog()))
+       # self.edit_output_evaluation_tab.setText(str(self.directoryDialog()))
        
     @pyqtSignature("")
     def on_btn_source_machine_translation_tab_clicked(self):
@@ -583,8 +630,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dialog.setViewMode(QFileDialog.Detail)
         if dialog.exec_():
             return(dialog.selectedFiles()[0])
-        #else:
-        #   return os.pathdirname(os.path.abspath(__file__))
+        else:
+           return None #os.pathdirname(os.path.abspath(__file__))
 
     @pyqtSignature("")
     def on_btn_output_post_editing_clicked(self):
