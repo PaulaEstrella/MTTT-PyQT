@@ -71,8 +71,8 @@ while(<TEST>) {
 
 close(TEST);
 close(REF);
-
-print 1 - (($correct - max(0, $ntest - $nref)) / $nref), "\n";
+printf(" %8.2f", 100*(1 - (($correct - max(0, $ntest - $nref)) / $nref)));
+#print 1 - (($correct - max(0, $ntest - $nref)) / $nref), "\n";
 
 
 sub position_independent_correct_words {

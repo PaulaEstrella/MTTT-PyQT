@@ -74,8 +74,8 @@ while(<TEST>) {
 
 close(TEST);
 close(REF);
-
-print $distance/$nref, "\n";
+printf(" %8.2f", ($distance/$nref)*100);
+#print $distance/$nref, "\n";
 
 sub edit_distance {
   my @W=(0..@words_ref);

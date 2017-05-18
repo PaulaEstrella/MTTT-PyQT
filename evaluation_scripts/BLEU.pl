@@ -192,17 +192,8 @@ $bleu = $brevity_penalty * exp((my_log( $bleu[1] ) +
 				my_log( $bleu[2] ) +
 				my_log( $bleu[3] ) +
 				my_log( $bleu[4] ) ) / 4) ;
-printf "%.2f, %.1f/%.1f/%.1f/%.1f (BP=%.3f, ratio=%.3f, hyp_len=%d, ref_len=%d)\n",
-    100*$bleu,
-    100*$bleu[1],
-    100*$bleu[2],
-    100*$bleu[3],
-    100*$bleu[4],
-    $brevity_penalty,
-    $length_translation / $length_reference,
-    $length_translation,
-    $length_reference;
-
+printf "%.2f",  100*$bleu;
+    
 sub my_log {
   return -9999999999 unless $_[0];
   return log($_[0]);
