@@ -88,8 +88,8 @@ python main.py
 
 
 ### Contributors
-- Paula Estrella <pestrella at famaf dot unc dot edu dot ar>
-- Roxana Lafuente <roxana.lafuente at gmail dot com>
-- Miguel Lemos <miguelemosreverte at gmail dot com>
+- Paula Estrella #<pestrella at famaf dot unc dot edu dot ar>
+- Roxana Lafuente #<roxana.lafuente at gmail dot com>
+- Miguel Lemos #<miguelemosreverte at gmail dot com>
 
 We welcome bugreports as much as new contributions, don't hesitate to contact us!
