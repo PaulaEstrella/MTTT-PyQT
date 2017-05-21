@@ -1,0 +1,17 @@
+MTTT_PyQt works on Widnows following these steps but hasn't been extensively tested:
+1- Install Cygwin and choose to install Qt version '4.8.7', SIP version '4.17', PyQt version: '4.11.4' or closest versions
+2- Install X envirnoment for Cygwin (we used LXDE)
+3- Open a session of Cygwin graphical envorinment (usually found in the main menu, e.g. under programs > LXDE)
+4- Download the binaries for Moses and Giza++ and uncompress them:
+- Giza++ is included in the folder install/GIZA++_binaries; you should copy them to the scripts folder inside the Moses folder
+- Moses http://www.statmt.org/moses/?n=moses.releases
+4- Download and uncompress MTTT_PyQT / MTTT_Gtk
+5- open a terminal and go to the main folderof MTTT (e.g. cd /home/paula/MTTT_PyQt)
+6- type in ther terminal's commnad prompt: python main.py
+- This should start installing the mising libraries or show warning of missing tools
+- It should install all the necessary dependencies to start MTTT but it hasn't been extensively tested
+7- The first time MTTT opens, it will ask you to provide the folder where Moses is installed
+8- If you see the main window and start working, you can monitor the errors as they will appear on the terminal.
+It would be great if you were so kind to report errors back, thanks.
+
+

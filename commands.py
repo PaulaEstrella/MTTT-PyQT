@@ -5,9 +5,10 @@
 
 ##############################################################################
 #
-# PyKeylogger: TTT for Linux and Windows
+# Machine Translation Training Tool
 # Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
 #                    Miguel Lemos <miguelemosreverte@gmail.com>
+#		     Paula Estrella <pestrella@gmail.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

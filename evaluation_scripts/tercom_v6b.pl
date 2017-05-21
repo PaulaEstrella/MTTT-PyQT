@@ -1235,7 +1235,7 @@ sub load_text_data {
     $_ = $temp;
     #print $_;
 	s/^\#.*$//g;
-	if (m/^\s*(.*)\s*\((\S+)\)\s*$/) {#deleted from regexp 
+	if (m/^\s*(.*)\s*\((\S+)\)\s*$/) {
         #print $_;
 	    my ($sent, $id) = ($1, $2);
         #my $sent = $1;

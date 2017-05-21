@@ -14,12 +14,12 @@ TTT is an under development post-editing suite which aims to improve the transla
 
 ### Features
 - Portable (Windows / Linux)
-- Friendly Graphical User Interface (GUI) for MOSES.
+- Graphical User Interface (GUI) for MOSES.
 - Use machine translation tool MOSES, post-edit the output and run evaluation metrics.
 
 - Versions: 
 GTK-based https://github.com/roxana-lafuente/MTTT
-Web POC: https://github.com/miguelemosreverte/TTT_web
+Web POC: https://github.com/miguelemosreverte/MTTT_web
 
 ### Dependencies
 Tested on: Ubuntu 16.04 LTS, Qt version '4.8.7', SIP version '4.17', PyQt version: '4.11.4'
@@ -64,7 +64,7 @@ This is necessary to use the redirection commands used by MOSES commands.
 	
 ### Status
 - Under development. Currently everything is working but we need a better GUI design and add robustness (strict error handling).
-
+- Features we will add in the near future: import TMX files, more productiviy indicators, show intermediate results (not just raw commads results), better error handling and testing
 
 
 ### How to use
@@ -78,6 +78,8 @@ python main.py
 ```
 ##### On Windows
 
+See also README.windows 
+
 Run LXDE or any other X window environment from CygWin. From inside LXDE or your favorite one run:
 
 ```
@@ -90,4 +92,4 @@ python main.py
 - Roxana Lafuente <roxana.lafuente at gmail dot com>
 - Miguel Lemos <miguelemosreverte at gmail dot com>
 
-We welcome new contributions! If you would like to be part of the team, create a new pull request and contact Paula to let us know. If it is merged into the project you will be added as a contributor.
+We welcome bugreports as much as new contributions, don't hesitate to contact us!

@@ -1,12 +1,13 @@
-"""@brief     Contains constants common to all modules of TTT."""
+"""@brief     Contains constants common to all modules of MTTT."""
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ##############################################################################
 #
-# PyKeylogger: TTT for Linux and Windows
+# Machine Translation Training Tool
 # Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
 #                    Miguel Lemos <miguelemosreverte@gmail.com>
+#		     Paula Estrella <pestrella@gmail.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,7 +27,7 @@ import os
 
 
 # Languages we show in the GUI to work with Moses.
-languages = ["en", "es", "fr", "it", "ru", "cz", "ar", "pt", "de"]
+languages = ["ar", "cz", "de", "en", "es", "fr", "it" , "pt","ru"]
 
 def adapt_path_for_cygwin(is_windows, directory):
     """@brief     Adapts a linux path to a windows one."""

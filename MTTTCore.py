@@ -1,10 +1,13 @@
+"""@brief     MTTT's core commands, stems from the original version created using Gtk https://github.com/roxana-lafuente/MTTT"""
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ##############################################################################
 #
-## Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
+# Machine Translation Training Tool
+# Copyright (C) 2016 Roxana Lafuente <roxana.lafuente@gmail.com>
 #                    Miguel Lemos <miguelemosreverte@gmail.com>
+#		     Paula Estrella <pestrella@gmail.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -72,7 +75,7 @@ UI_INFO = """
 </ui>
 """
 
-class MyWindow():
+class MTTTCore():
 
     def __init__(self):
         # Recognize OS
@@ -251,7 +254,7 @@ class MyWindow():
             if all_ok:
                 self.is_corpus_preparation_ready = True
         else:
-            #print "TODO: Pop up error message!!"
+            print "TODO: Pop up error message!!"
         return return_text
 
     def _train(self):
@@ -342,7 +345,7 @@ class MyWindow():
             output_text = chooseModel
         else:
             output_text = adapt_path_for_cygwin(self.is_windows, self.output_text)
-        
+        output = "Running decoder, please wait\n\n............\n\n"
         # Run the decoder.
         cmd = get_test_command(self.moses_dir,
                                    adapt_path_for_cygwin(self.is_windows, output_text) + "/train/model/moses.ini",
